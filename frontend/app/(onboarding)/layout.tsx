@@ -1,6 +1,5 @@
 'use client'
 
-// import '../../app/globals.css'
 import { OnboardingProvider } from "@/contexts/OnboardingContext";
 
 export default function RootLayout({
