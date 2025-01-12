@@ -1,0 +1,24 @@
+{
+  "name": "zealthy-exercise",
+  "private": "true",
+  "version": "1.0.0",
+  "description": "Zealthy Exercise",
+  "main": "index.js",
+  "scripts": {
+    "dev:frontend": "cd frontend && npm run dev",
+    "start:frontend": "cd frontend && npm start",
+    "dev:backend": "cd backend && npm run start:dev",
+    "start:backend": "cd backend && npm start",
+    "start:dev": "run-p dev:*",
+    "start": "run-p start"
+  },
+  "author": "Higgor Calheiros",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/mapped-types": "*",
+    "npm-run-all": "^4.1.5"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]}
