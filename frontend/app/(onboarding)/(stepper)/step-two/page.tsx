@@ -19,7 +19,6 @@ export default function StepTwoPage () {
                   console.log(error)
               }
         }
-
         getConfigParams()
     }, [getConfig, setComponents])
 
