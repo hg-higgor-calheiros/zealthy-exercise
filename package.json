@@ -7,6 +7,7 @@
   "scripts": {
     "dev:frontend": "cd frontend && npm run dev",
     "start:frontend": "cd frontend && npm start",
+    "build:frontend": "cd frontend && npm run build",
     "dev:backend": "cd backend && npm run start:dev",
     "start:backend": "cd backend && npm start",
     "start:dev": "run-p dev:*",
