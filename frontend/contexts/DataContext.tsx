@@ -21,7 +21,7 @@ export interface UsersProps {
 }
 
 
-const API_URL = 'http://localhost:5000'
+const API_URL = 'https://zealthy-exercise-production.up.railway.app'
 
 const DataContext = createContext<UsersProps>({} as UsersProps);
 

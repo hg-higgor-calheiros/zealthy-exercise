@@ -22,7 +22,8 @@ export interface Step {
     components: ComponentTypes[]
 }
 
-const API_URL = 'http://localhost:5000'
+// Replace with env vars
+const API_URL = 'https://zealthy-exercise-production.up.railway.app'
 
 const OnboardingContext = createContext<OnboardingContextProps>({} as OnboardingContextProps);
 
