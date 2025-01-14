@@ -1,34 +1,44 @@
 'use client'
 
 import { ReactNode } from "react"
-import Link from "next/link"
 import { usePathname } from 'next/navigation'
+import { VerticalLine } from "./VerticalLine"
+import Step from "./Step"
 
 type StepsLayoutProps = {
   children: ReactNode,
   title: string
 }
 
+// This could be used to generate the steps dynamically
 export const StepsLayout = ({ children, title }: StepsLayoutProps) => {
   const pathname = usePathname()
 
+  const isPathActive = (path: string) => path === pathname
+
   return (
-    <article className='flex justify-start gap-28 min-w-[82%]'>
-      <div className='flex flex-col px-8 py-6 mx-20 h-[200px] border-r-2 border-[#8586887c] border-dashed'>
-        <Link href='/'>
-          <p>Home</p>
-        </Link>
-        <Link href='/step-two'  className={pathname === '/step-two' ? 'underline' : ''}>
-          <p>Step 2</p>
-        </Link>
-        <Link href='/step-three'  className={pathname === '/step-three' ? 'underline' : ''}>
-          <p>Step 3</p>
-        </Link>
+    <section className='flex justify-start gap-6 w-screen'>
+      <div className='px-8 py-6 w-1/4'>
+        <div className="flex h-[90vh] m-auto flex-col bg-zinc-100 p-12 rounded-xl">
+
+          <Step path={'/'} title={'Home'} active={isPathActive('/')}/>
+          
+          <VerticalLine active={false} />
+          <Step path={'/step-two'} title={'Second step'} active={isPathActive('/step-two')}/>
+          
+          <VerticalLine active={false} />
+          <Step path={'/step-three'} title={'Third step'} active={isPathActive('/step-three')}/>
+
+        </div>
       </div>
-      <div>
-        <h1 className="mb-4 text-zinc-700">{title}</h1>
-        <form>{children}</form>
+      <div className="w-3/4 h-[90vh] flex flex-col items-start justify-start p-12">
+
+        <h1 className="mb-8 text-zinc-700 text-2xl">{title}</h1>
+        
+        <div className="shadow-xl p-8 rounded-xl w-full">
+          <form>{children}</form>
+        </div>
       </div>
-    </article>
+    </section>
   )
 }

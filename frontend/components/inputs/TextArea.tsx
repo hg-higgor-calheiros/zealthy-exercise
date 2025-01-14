@@ -10,7 +10,7 @@ export const TextArea= ({ label, onChange, placeholder }: TextAreaProps) => {
     <>
       <label
         htmlFor="text"
-        className="mb-4"
+        className="mb-12 text-zinc-600 font-light"
       >
         {label}
       </label>
@@ -18,7 +18,7 @@ export const TextArea= ({ label, onChange, placeholder }: TextAreaProps) => {
         name="text"
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        className="bg-transparent border-2 rounded-lg p-2 text-[18px] min-h-[100px] max-h-[250px] max-w-[350px] lg:max-w-[500px]"
+        className="bg-transparent border-2 rounded-lg p-2 text-[18px] min-h-[200px] max-h-[450px] max-w-[350px] lg:max-w-[600px]"
       />
     </>
   );

@@ -61,17 +61,19 @@ export default function AddressForm () {
     const { setAddressFirstLine, setAddressSecondLine, setAddressState } = useOnboarding()
 
     return (
-        <div className="flex flex-col p-6 gap-6">
-            <h1>Insert your address below</h1>
+        <div className="flex flex-col p-6 gap-4">
+            <h1 className="font-bold text-2xl text-zinc-800">Insert your address below</h1>
             
-            <TextInput placeholder="first line" onChange={setAddressFirstLine} />
-            <TextInput placeholder="second line" onChange={setAddressSecondLine} />
+            <TextInput placeholder="Street name" onChange={setAddressFirstLine} />
+            <TextInput placeholder="City" onChange={setAddressSecondLine} />
 
-            <select name="states" onChange={(evt) => setAddressState(evt.target.value)}>
-                {states.map((state, idx) => (
-                    <option key={idx} value={state.value}>{state.label}</option>
-                ))}
-            </select>
+            <div className="my-3 w-1/2">
+                <select name="states" onChange={(evt) => setAddressState(evt.target.value)} className="bg-transparent border-2 rounded-lg p-3 placeholder:text-base w-full">
+                    {states.map((state, idx) => (
+                        <option key={idx} value={state.value}>{state.label}</option>
+                    ))}
+                </select>
+            </div>
 
         </div>
     )

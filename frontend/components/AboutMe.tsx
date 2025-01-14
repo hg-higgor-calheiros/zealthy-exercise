@@ -8,7 +8,8 @@ export default function AboutMe () {
 
     return (
         <div className="flex flex-col p-6">
-            <TextArea label="Tell us about yourself" onChange={setAboutMe} />
+            <h1 className="font-bold text-2xl text-zinc-800">We want to know you better!</h1>
+            <TextArea label="Can you tell us a little about yourself?" onChange={setAboutMe} />
         </div>
     )
 }
