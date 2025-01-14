@@ -53,7 +53,7 @@ jobs:
         run: npm install
 
       - name: Check env vars
-        run: echo ${{ env.NEXT_PUBLIC_API_URL }}
+        run: echo "The API_URL is ${{ env.NEXT_PUBLIC_API_URL }}"
         
       - name: Build with Next.js
         run: npm run build:frontend
