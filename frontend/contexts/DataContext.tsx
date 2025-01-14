@@ -20,8 +20,7 @@ export interface UsersProps {
     getUsers: () => Promise<User[]>
 }
 
-
-const API_URL = 'https://zealthy-exercise-production.up.railway.app'
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const DataContext = createContext<UsersProps>({} as UsersProps);
 
@@ -29,7 +28,6 @@ export function DataProvider({ children }: { children: JSX.Element | JSX.Element
     const [users, setUsers] = useState([] as User[])
 
     const fetchUsers = useCallback(async function () { 
-        console.log('AAAA')
         const response = await fetch(API_URL + '/users');
         const data = await response.json()
         setUsers(data)

@@ -14,8 +14,7 @@ export interface Step {
     components: ComponentTypes[]
 }
 
-// Replace with env vars
-const API_URL = 'https://zealthy-exercise-production.up.railway.app'
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const AdminContext = createContext<AdminContextProps>({} as AdminContextProps);
 

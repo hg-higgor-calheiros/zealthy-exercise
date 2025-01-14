@@ -1,4 +1,3 @@
-import { Type } from 'class-transformer';
 import { IsString, IsNotEmpty, IsArray, ValidatorConstraint, ValidatorConstraintInterface, Validate, ValidateNested } from 'class-validator';
 
 const ALLOWED_COMPONENTS = [
