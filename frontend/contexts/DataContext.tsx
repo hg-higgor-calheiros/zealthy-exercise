@@ -20,7 +20,7 @@ export interface UsersProps {
     getUsers: () => Promise<User[]>
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://zealthy-exercise-production.up.railway.app'
 
 const DataContext = createContext<UsersProps>({} as UsersProps);
 

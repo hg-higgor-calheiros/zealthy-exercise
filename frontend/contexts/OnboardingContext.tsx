@@ -22,7 +22,7 @@ export interface Step {
     components: ComponentTypes[]
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://zealthy-exercise-production.up.railway.app'
 
 const OnboardingContext = createContext<OnboardingContextProps>({} as OnboardingContextProps);
 
