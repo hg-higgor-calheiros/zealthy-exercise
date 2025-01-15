@@ -11,7 +11,6 @@ const ALLOWED_COMPONENTS: ComponentTypes[] = [
     'about_me',
     'birthday',
     'address_form',
-    'sign_up'
 ]
 
 export default function AdminPage() {

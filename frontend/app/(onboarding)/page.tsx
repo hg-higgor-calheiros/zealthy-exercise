@@ -5,6 +5,7 @@ import { useOnboarding } from "@/contexts/OnboardingContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { isEmail } from "../utils/validation";
+import Link from "next/link";
 
 export default function Home() {
   const router = useRouter()
@@ -48,6 +49,10 @@ export default function Home() {
 
             <div className="h-3">
               {error && <p className="text-red-600">{error}</p> }
+            </div>
+
+            <div className="p-2">
+              <p>Dont have an account? <Link href={'/credentials'} className="font-semibold">Click here</Link> to create one</p>
             </div>
 
             <button 
