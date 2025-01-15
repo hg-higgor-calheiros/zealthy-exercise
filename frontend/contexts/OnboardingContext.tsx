@@ -3,11 +3,12 @@
 import { createContext, JSX, useCallback, useContext, useEffect, useState } from "react";
 import { User, UserResponse } from "./DataContext";
 
-export type ComponentTypes = 'about_me' | 'address_form' | 'birthday'
+export type ComponentTypes = 'about_me' | 'address_form' | 'birthday' | 'sign_up'
 
 export interface OnboardingContextProps {
     getConfig: (step: 'second' | 'third') => Promise<Step>
     signUp: (email: string, password: string) => Promise<void>,
+    signIn: (email: string, password: string) => Promise<{token: string, error?: unknown}>,
     birthday: Date | undefined,
     setBirthday: (date: Date | null) => void
     setAboutMe: (text: string) => void
@@ -62,6 +63,15 @@ export function OnboardingProvider({ children }: { children: JSX.Element | JSX.E
         setId(identifiers[0].id.toString())
     }
 
+    const signIn = async (email: string, password: string): Promise<{token: string, error?: unknown}> => {
+        try {
+            const { token } = await authUser(email, password)
+            return { token }
+        } catch (err) {
+            return { token: '', error: err}
+        }
+    };
+
     const formatedAddress = () => `${addressFistLine}, ${addressSecondLine} - ${addressState}`
 
     const setBirthday = (date: Date | null) => _setBirthday(date ?? undefined)
@@ -80,6 +90,7 @@ export function OnboardingProvider({ children }: { children: JSX.Element | JSX.E
         })
     }
 
+    // Move calls to useApi()
     const saveUser = async (user: User): Promise<UserResponse> => {
         const response = await fetch(API_URL + "/users", {
             method: "POST",
@@ -93,6 +104,24 @@ export function OnboardingProvider({ children }: { children: JSX.Element | JSX.E
         const data = await response.json()
         return data
     }
+
+    const authUser = async (email: string, password: string): Promise<{ token: string }> => {
+        const response = await fetch(API_URL + "/users/auth", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        if (response.status === 401 ) {
+            throw new Error('Unauthorized')
+        }
+
+         const data = await response.json()
+        return data
+    } 
 
     const updateUser = async (user: Partial<User>): Promise<User> => {
         const response = await fetch(API_URL + "/users/" + id, {
@@ -113,7 +142,8 @@ export function OnboardingProvider({ children }: { children: JSX.Element | JSX.E
             value={{
                 birthday, 
                 getConfig, 
-                signUp, 
+                signUp,
+                signIn, 
                 setBirthday, 
                 setAddressFirstLine, 
                 setAddressSecondLine, 

@@ -23,7 +23,7 @@ export const Navigation = ({
             </button>
         </Link>
         <Link href={next ?? ''}>
-            <button className="px-2 py-1 border-2 rounded-lg text-[18px] lg:text-[24px]"
+            <button className={`px-2 py-1 border-2 rounded-lg text-[18px] lg:text-[24px] ${stepIsValidated ? '' : 'text-zinc-200'}`}
                 disabled={!stepIsValidated}
                 onClick={onSubmit}
             >

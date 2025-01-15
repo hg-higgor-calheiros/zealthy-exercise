@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  HttpException,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthUserDto } from './dto/auth-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -15,6 +24,14 @@ export class UsersController {
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @Post('/auth')
+  async authUser(@Body() authUserDto: AuthUserDto) {
+    const token = await this.usersService.auth(authUserDto);
+
+    if (token) return { token };
+    throw new HttpException('Unathorized', 401);
   }
 
   @Get(':id')

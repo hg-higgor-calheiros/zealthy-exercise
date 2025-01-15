@@ -8,15 +8,22 @@ import { isEmail } from "../utils/validation";
 
 export default function Home() {
   const router = useRouter()
-  const { signUp } = useOnboarding()
+  const { signIn } = useOnboarding()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
   const handleSignUp = async () => {
-    await signUp(email, password)
-    router.push('/step-two')
+    const { token, error } = await signIn(email, password)
+    
+    if (error) setError("Invalid credentials")
+    else {
+      // TODO set token as cookie to validate the session
+
+      console.log(token)
+      router.push('/step-two')
+    }
   }
 
   const disableButton = () => !email || !isEmail(email) || !password

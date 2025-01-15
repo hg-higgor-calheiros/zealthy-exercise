@@ -21,7 +21,7 @@ export const StepsLayout = ({ children, title }: StepsLayoutProps) => {
       <div className='px-8 py-6 w-1/4'>
         <div className="flex h-[90vh] m-auto flex-col bg-zinc-100 p-12 rounded-xl">
 
-          <Step path={'/'} title={'Home'} active={isPathActive('/')}/>
+          <Step path={'/credentials'} title={'Credentials'} active={isPathActive('/credentials')}/>
           
           <VerticalLine active={false} />
           <Step path={'/step-two'} title={'Second step'} active={isPathActive('/step-two')}/>

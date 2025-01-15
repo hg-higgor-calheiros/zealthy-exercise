@@ -25,7 +25,7 @@ export default function StepTwoPage () {
     return (
         <StepsLayout title={'Personal informations'}>
             {RenderComponents({components: components.components})}
-            <Navigation back="/" next="step-three" />
+            <Navigation back="/credentials" next="step-three" />
         </StepsLayout>
     )
 }
