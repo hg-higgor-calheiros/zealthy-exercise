@@ -2,7 +2,7 @@
 
 import { createContext, JSX, useCallback, useContext, useEffect, useState } from "react";
 
-export type ComponentTypes = 'about_me' | 'address_form' | 'birthday'
+export type ComponentTypes = 'about_me' | 'address_form' | 'birthday' | 'sign_up'
 
 export interface AdminContextProps {
     getSteps: () => Promise<Step[]>
