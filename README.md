@@ -102,5 +102,6 @@ This project is a **coding exercise** and is not intended for production use. Th
 - **UI Design**: The user interface is minimalistic and should not be considered representative of a production-grade UI. It serves to demonstrate functionality and not design principles.
 - **Backend**: The backend is a basic implementation for demonstration purposes and include very basic business logic and validation.
 - **Database**: Database handling and data structures are basic, designed to demonstrate data storage and retrieval rather than focusing on optimization or scalability.
+- **Entities**: Some of the entities (i.e. Steps) could leverage from an a full CRUD implementation with complex logic and valitation but were simplified for the sake of time just to match the exercise requirements.
 
 This project is **not** suitable for production environments and is intended solely to demonstrate basic functionality and key concepts in modern web development.

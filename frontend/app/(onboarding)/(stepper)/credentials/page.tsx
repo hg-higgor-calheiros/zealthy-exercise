@@ -5,16 +5,18 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { isEmail } from "../../../utils/validation";
 import RenderComponents from "@/app/utils/render";
-import { Navigation } from "@/components/steps/Navigation";
-import { StepsLayout } from "@/components/steps/StepsLayout";
+import { Navigation } from "@/components/ui/stepper/Navigation";
+import { StepsLayout } from "@/components/ui/stepper/StepsLayout";
 
 export default function Home() {
   const router = useRouter()
-  const { signUp } = useOnboarding()
+  const { steps, signUp } = useOnboarding()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+
+  const next = steps[0].path
 
   const disableButton = () => !email || !isEmail(email) || !password || password.length < 8
 
@@ -46,7 +48,7 @@ export default function Home() {
   return (
       <StepsLayout title={'Credentials'}>
           {RenderComponents({components: ['sign_up'], error, onChangeEmail, onChangePassword })}
-          <Navigation back="/" next="step-two" onSubmit={handleSave} stepIsValidated={!disableButton()}/>
+          <Navigation back="/" next={next} onSubmit={handleSave} stepIsValidated={!disableButton()}/>
       </StepsLayout>
   );
 }

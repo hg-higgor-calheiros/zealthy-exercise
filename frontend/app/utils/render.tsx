@@ -3,7 +3,7 @@
 import AboutMe from "@/components/AboutMe"
 import AddressForm from "@/components/AddressForm"
 import BirthdayForm from "@/components/Birthday"
-import SignUp from "@/components/SignUp"
+import SignUp from "@/components/auth/SignUp"
 import { ComponentTypes } from "@/contexts/OnboardingContext"
 import { JSX } from "react"
 

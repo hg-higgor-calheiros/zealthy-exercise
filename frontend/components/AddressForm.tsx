@@ -1,7 +1,7 @@
 'use client'
 
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import { TextInput } from "./inputs/TextInput";
+import { TextInput } from "./ui/inputs/TextInput";
 
 export const states = [
     { label: "Alaska", value: "Alaska" },
@@ -57,8 +57,11 @@ export const states = [
     { label: "Wyoming", value: "Wyoming" },
   ];
 
+
 export default function AddressForm () {
     const { setAddressFirstLine, setAddressSecondLine, setAddressState } = useOnboarding()
+
+
 
     return (
         <div className="flex flex-col p-6 gap-4">

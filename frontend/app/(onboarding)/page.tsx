@@ -1,6 +1,6 @@
 'use client';
 
-import { TextInput } from "@/components/inputs/TextInput";
+import { TextInput } from "@/components/ui/inputs/TextInput";
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -10,18 +10,20 @@ import Link from "next/link";
 export default function Home() {
   const router = useRouter()
   const { signIn } = useOnboarding()
+  const [loading, setLoading] = useState(false)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
   const handleSignUp = async () => {
+    setLoading(true)
     const { token, error } = await signIn(email, password)
     
-    if (error) setError("Invalid credentials")
-    else {
-      // TODO set token as cookie to validate the session
-
+    if (error){ 
+      setLoading(false)
+      setError("Invalid credentials")
+    } else {
       console.log(token)
       router.push('/step-two')
     }
@@ -62,7 +64,7 @@ export default function Home() {
               `} 
               onClick={handleSignUp} 
               disabled={disableButton()}>
-                  Next
+                  {loading ? 'Authenticating..' : 'Access'}
           </button>
         </div>
     </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useOnboarding } from "@/contexts/OnboardingContext"
-import { DatePickerComponent } from "./inputs/DatePicker"
+import { DatePickerComponent } from "./ui/inputs/DatePicker"
 
 export default function BirthdayForm () {
     const { birthday, setBirthday } = useOnboarding()

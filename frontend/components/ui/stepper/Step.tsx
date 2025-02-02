@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { Dot } from "./Dot"
 import { StepTitle } from "./StepTitle"
 
@@ -8,13 +7,13 @@ interface StepProps {
     active?: boolean
 }
 
-export default function Step ({ path, title, active = false}: StepProps) {
+export default function Step ({ title, active = false}: StepProps) {
     return (
-        <Link href={path}>
+        <div>
             <div className="flex items-center gap-4">
-            <Dot active={active} />
-            <StepTitle active={active} title={title} />
+                <Dot active={active} />
+                <StepTitle active={active} title={title} />
             </div>
-        </Link>
+        </div>
     )
 }

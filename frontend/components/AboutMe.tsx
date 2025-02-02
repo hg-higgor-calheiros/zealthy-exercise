@@ -1,7 +1,7 @@
 'use client'
 
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import { TextArea } from "./inputs/TextArea";
+import { TextArea } from "./ui/inputs/TextArea";
 
 export default function AboutMe () {
     const { setAboutMe } = useOnboarding()

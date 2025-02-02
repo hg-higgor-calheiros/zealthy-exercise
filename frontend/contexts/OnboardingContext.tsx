@@ -6,20 +6,25 @@ import { User, UserResponse } from "./DataContext";
 export type ComponentTypes = 'about_me' | 'address_form' | 'birthday' | 'sign_up'
 
 export interface OnboardingContextProps {
+    steps: Step[],
     getConfig: (step: 'second' | 'third') => Promise<Step>
     signUp: (email: string, password: string) => Promise<void>,
     signIn: (email: string, password: string) => Promise<{token: string, error?: unknown}>,
-    birthday: Date | undefined,
     setBirthday: (date: Date | null) => void
+    birthday: Date | undefined,
     setAboutMe: (text: string) => void
+    aboutMe: string | undefined,
     setAddressFirstLine: (value: string) => void
     setAddressSecondLine: (value: string) => void
     setAddressState: (value: string) => void
+    address: string | undefined
     submitData: () => Promise<void>
 }
 
 export interface Step {
+    id: number
     title: string,
+    path: string,
     components: ComponentTypes[]
 }
 
@@ -72,7 +77,7 @@ export function OnboardingProvider({ children }: { children: JSX.Element | JSX.E
         }
     };
 
-    const formatedAddress = () => `${addressFistLine}, ${addressSecondLine} - ${addressState}`
+    const formatedAddress = () => (addressFistLine || addressSecondLine ||addressState ) ? `${addressFistLine}, ${addressSecondLine} - ${addressState}` : undefined
 
     const setBirthday = (date: Date | null) => _setBirthday(date ?? undefined)
     const setAboutMe = (text: string) => _setAboutMe(text)
@@ -140,15 +145,18 @@ export function OnboardingProvider({ children }: { children: JSX.Element | JSX.E
     return (
         <OnboardingContext.Provider
             value={{
-                birthday, 
+                steps,
                 getConfig, 
                 signUp,
                 signIn, 
-                setBirthday, 
+                setBirthday,
+                birthday, 
                 setAddressFirstLine, 
                 setAddressSecondLine, 
                 setAddressState, 
+                address: formatedAddress(),
                 setAboutMe, 
+                aboutMe,
                 submitData
             }} >
             {children}
