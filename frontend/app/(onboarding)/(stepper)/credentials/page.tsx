@@ -1,10 +1,11 @@
 'use client';
 
-import { useOnboarding } from "@/contexts/OnboardingContext";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { isEmail } from "../../../utils/validation";
+import { useOnboarding } from "@/contexts/OnboardingContext";
+
 import RenderComponents from "@/app/utils/render";
+import { isEmail } from "../../../utils/validation";
 import { Navigation } from "@/components/ui/stepper/Navigation";
 import { StepsLayout } from "@/components/ui/stepper/StepsLayout";
 
@@ -16,7 +17,7 @@ export default function Home() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
-  const next = steps[0].path
+  const next = useMemo(() => steps[0]?.path, [steps])
 
   const disableButton = () => !email || !isEmail(email) || !password || password.length < 8
 
