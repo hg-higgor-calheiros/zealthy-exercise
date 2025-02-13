@@ -1,55 +1,61 @@
-import StepsContent from './StepsContent'
+'use client'
 
-interface Step {
-    id: number;
-    title: string;
-    path: string;
-    components: string[];
-}
+import { useEffect, useMemo, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
 
-async function fetchSteps(): Promise<Step[]> {
-    const response = await fetch('https://zealthy-exercise-production.up.railway.app/steps', {
-        // Disable cache to always get fresh data
-        cache: 'no-store',
-        next: {
-            // Revalidate every 10 seconds
-            revalidate: 10
-        }
-    });
-    
-    if (!response.ok) {
-        throw new Error('Failed to fetch steps');
+import RenderComponents from "@/app/utils/render"
+import Spinner from "@/components/ui/Spinner"
+import { Navigation } from "@/components/ui/stepper/Navigation"
+import { StepsLayout } from "@/components/ui/stepper/StepsLayout"
+import { Step, useOnboarding } from "@/contexts/OnboardingContext"
+
+export default function Steps () {
+    const router = useRouter()
+    const pathname = usePathname()
+    const { steps, aboutMe, birthday, address, submitData } = useOnboarding()
+
+    const [currentStep, setCurrentStep] =  useState<Step>({ id: 0, title: '', path: '', components: [] } as Step)
+    const [previousStepPath, setPreviousStepPath] = useState('/credentials')
+    const [nextStepPath, setNextStepPath] = useState<string>()
+
+    useEffect(() => {
+        const currentStepIndex = steps.findIndex(step => step.path === pathname)
+        if (currentStepIndex !== -1) setCurrentStep(steps[currentStepIndex])
+
+        const nextStep = steps[currentStepIndex + 1]
+        if (nextStep) setNextStepPath(nextStep.path)
+
+        const prevStep = steps[currentStepIndex - 1]
+        if (prevStep) setPreviousStepPath(prevStep.path)
+    }, [pathname, steps])
+
+    // Very simple validation - possible to add more complex validations if needed
+    const isStepValidated = useMemo(() => {
+        return currentStep.components.every(component => {
+            if(component === 'about_me' && aboutMe && aboutMe.trim().length > 0) return true
+            if(component === 'address_form' && address && address.trim().length > 0) return true
+            if(component === 'birthday' && birthday) return true
+            return false
+        })
+    }, [aboutMe, address, birthday, currentStep])
+
+    const handleSubmit = async () => {
+        await submitData()
+        router.push('/success')
     }
 
-    return response.json();
-}
-
-// This function runs on the server at request time
-export async function generateStaticParams() {
-    try {
-        const steps = await fetchSteps();
-        
-        // Map the steps to the required format, extracting the path segment after the slash
-        return steps.map((step) => ({
-            steps: step.path.replace('/', '')
-        }));
-    } catch (error) {
-        console.error('Error fetching steps:', error);
-        // Try fetching again in case of temporary failure
-        try {
-            const retrySteps = await fetchSteps();
-            return retrySteps.map((step) => ({
-                steps: step.path.replace('/', '')
-            }));
-        } catch (retryError) {
-            console.error('Error retrying fetch steps:', retryError);
-            // If both attempts fail, throw the error to let Next.js handle it
-            throw retryError;
-        }
-    }
-}
-
-// This function runs on the server at request time
-export default async function Page() {
-    return <StepsContent />
+    return (
+        <StepsLayout title={currentStep.title}>
+            { 
+                currentStep.title ? 
+                    RenderComponents({components: currentStep.components}) :
+                    <Spinner />
+            }
+            {
+                nextStepPath ? 
+                    <Navigation back={previousStepPath} next={nextStepPath} stepIsValidated={isStepValidated}/> :
+                    <Navigation back={previousStepPath} onSubmit={handleSubmit} stepIsValidated={isStepValidated}/>
+            }
+        </StepsLayout>
+    )
 }
